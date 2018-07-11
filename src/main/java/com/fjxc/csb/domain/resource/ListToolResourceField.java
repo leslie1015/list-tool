@@ -10,6 +10,11 @@ import java.util.List;
  */
 public class ListToolResourceField {
 
+    /**
+     * 1,：普通字段，2按钮
+     */
+    public static final Short FIELD_TYPE_BUTTON = 2;
+
     private Integer resourceId;
 
     private String fieldName;
@@ -34,6 +39,16 @@ public class ListToolResourceField {
      * 下拉参数
      */
     List<SimpleParam> selectParams;
+
+    List<ListToolActionInfo> actions;
+
+    public List<ListToolActionInfo> getActions() {
+        return actions;
+    }
+
+    public void setActions(List<ListToolActionInfo> actions) {
+        this.actions = actions;
+    }
 
     public List<SimpleParam> getSelectParams() {
         return selectParams;

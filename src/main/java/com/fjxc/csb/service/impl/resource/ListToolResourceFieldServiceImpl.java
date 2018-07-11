@@ -4,6 +4,7 @@ import com.fjxc.csb.dao.resource.ListToolResourceFieldMapper;
 import com.fjxc.csb.domain.enumerate.SearchParamEnum;
 import com.fjxc.csb.domain.resource.ListToolResourceField;
 import com.fjxc.csb.service.parameter.BasicParameterService;
+import com.fjxc.csb.service.resource.ListToolActionInfoService;
 import com.fjxc.csb.service.resource.ListToolResourceFieldService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -21,17 +22,23 @@ public class ListToolResourceFieldServiceImpl implements ListToolResourceFieldSe
     @Autowired
     private BasicParameterService basicParameterService;
 
+    @Autowired
+    private ListToolActionInfoService listToolActionInfoService;
+
     @Override
     public List<ListToolResourceField> listByResourceId(Integer resourceId) {
 
         List<ListToolResourceField> fieldInfo = listToolResourceFieldMapper.listByResourceId(resourceId);
+        sort(fieldInfo);
         for (ListToolResourceField field : fieldInfo) {
             if (SearchParamEnum.DROP_DOWN.getType().equals(field.getSearchType()) ||
                     SearchParamEnum.DROP_DOWN_CHOICE.getType().equals(field.getSearchType())) {
                 field.setSelectParams(basicParameterService.listKeyValByGroupKey(field.getParamGroupKey()));
             }
+            if (ListToolResourceField.FIELD_TYPE_BUTTON.equals(field.getFieldType())) {
+                field.setActions(listToolActionInfoService.listByResourceId(resourceId));
+            }
         }
-        sort(fieldInfo);
         return fieldInfo;
     }
 
