@@ -2,7 +2,6 @@ package com.fjxc.csb.interceptor;
 
 import com.fjxc.csb.constants.SystemcCnstants;
 import com.fjxc.csb.domain.enumerate.SearchParamEnum;
-import com.fjxc.csb.domain.resource.ListToolResourceField;
 import com.fjxc.csb.domain.resource.SearchParam;
 import com.fjxc.csb.resultfilter.ResultFilterService;
 import com.fjxc.csb.util.SpringContextUtils;
@@ -15,12 +14,8 @@ import org.apache.ibatis.mapping.MappedStatement;
 import org.apache.ibatis.plugin.*;
 import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.RowBounds;
-import org.apache.ibatis.session.defaults.DefaultSqlSession;
 import org.springframework.beans.factory.NoSuchBeanDefinitionException;
 
-import java.sql.Connection;
-import java.text.SimpleDateFormat;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Properties;
@@ -157,8 +152,7 @@ public class SqlInterceptor implements Interceptor {
             } else if (SearchParamEnum.DROP_DOWN.getType().equals(param.getType())) {
                 sb.append(" and ").append(param.getFieldName()).append(" = ").append(param.getValue());
             }
-            // 时间区间
-            else if (SearchParamEnum.DATE_INTERVAL.getType().equals(param.getType())) {//TODO 时间控件还是有问题，删除了点查询，还是传原来的值
+            else if (SearchParamEnum.DATE_INTERVAL.getType().equals(param.getType())) {
                 String lessOrMoreCode = SearchParam.MORE_TYPE.equals(param.getMoreOrLessType()) ? " >= " : " <= ";
                 String exaceTime = SearchParam.MORE_TYPE.equals(param.getMoreOrLessType()) ? " 00:00:00" : " 23:59:59";
                 sb.append(" and ").append(param.getFieldName()).append(lessOrMoreCode).append(" to_date(").append("'").append(param.getValue()).append(exaceTime).append("'").append(", 'yyyy-mm-dd hh24:mi:ss')");
@@ -175,14 +169,6 @@ public class SqlInterceptor implements Interceptor {
         return sb.toString();
     }
 
-
-    /**
-     * 根据排序情况构造sql
-     *
-     * @param sql
-     * @param paramList
-     * @return
-     */
     private String buildSqlByOrder(String sql, List<SearchParam> paramList) {
 
         return null;

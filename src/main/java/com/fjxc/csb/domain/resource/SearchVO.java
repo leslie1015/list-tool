@@ -1,7 +1,5 @@
 package com.fjxc.csb.domain.resource;
 
-import java.util.List;
-
 public class SearchVO {
 
     private String resourceId;
