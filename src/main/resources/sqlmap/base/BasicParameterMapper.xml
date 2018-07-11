@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fjxc.csb.dao.parameter.BasicParameterMapper">
+    <resultMap id="BaseResultMap" type="com.fjxc.csb.domain.parameter.BasicParameter">
+        <result column="PARAM_GROUP_KEY" jdbcType="VARCHAR" property="paramGroupKkey"/>
+        <result column="PARAM_NAME" jdbcType="VARCHAR" property="paramName"/>
+        <result column="PARAM_KEY" jdbcType="VARCHAR" property="paramKey"/>
+        <result column="PARAM_VALUE" jdbcType="VARCHAR" property="paramValue"/>
+        <result column="LAN_CODE" jdbcType="DECIMAL" property="lanCode"/>
+        <result column="ORDER_NUM" jdbcType="DECIMAL" property="orderNum"/>
+        <result column="REMARK" jdbcType="VARCHAR" property="remark"/>
+        <result column="ADD_NO" jdbcType="VARCHAR" property="addNo"/>
+        <result column="ADD_NAME" jdbcType="VARCHAR" property="addName"/>
+        <result column="ADD_TIME" jdbcType="TIMESTAMP" property="addTime"/>
+        <result column="UPDATE_NO" jdbcType="VARCHAR" property="updateNo"/>
+        <result column="UPDATE_NAME" jdbcType="VARCHAR" property="updateName"/>
+        <result column="UPDATE_TIME" jdbcType="TIMESTAMP" property="updateTime"/>
+    </resultMap>
+    <resultMap id="SimpleParamResult" type="com.fjxc.csb.domain.parameter.SimpleParam">
+        <result column="PARAM_KEY" jdbcType="VARCHAR" property="paramKey"/>
+        <result column="PARAM_VALUE" jdbcType="VARCHAR" property="paramValue"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+        PARAM_GROUP_KEY, PARAM_NAME, PARAM_KEY, PARAM_VALUE, LAN_CODE, ORDER_NUM, REMARK, ADD_NO, ADD_NAME, ADD_TIME, UPDATE_NO, UPDATE_NAME, UPDATE_TIME
+    </sql>
+
+    <select id="listByGroupKey" parameterType="java.lang.String" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from BASIC_PARAMETER
+        where PARAM_GROUP_KEY = #{groupKey, jdbcType=VARCHAR}
+        order by order_num
+    </select>
+
+    <select id="listKeyValByGroupKey" parameterType="java.lang.String" resultMap="SimpleParamResult">
+        select PARAM_KEY,PARAM_VALUE
+        from BASIC_PARAMETER
+        where PARAM_GROUP_KEY = #{groupKey, jdbcType=VARCHAR}
+        order by order_num
+    </select>
+
+    <select id="getValueByKey" parameterType="java.lang.String" resultType="String">
+        select PARAM_VALUE
+        from BASIC_PARAMETER
+        where PARAM_KEY = #{key, jdbcType=VARCHAR}
+        and PARAM_GROUP_KEY = #{groupKey, jdbcType=DECIMAL}
+    </select>
+
+</mapper>

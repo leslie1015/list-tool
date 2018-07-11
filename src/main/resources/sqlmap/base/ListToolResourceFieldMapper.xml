@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fjxc.csb.dao.resource.ListToolResourceFieldMapper">
+    <resultMap id="BaseResultMap" type="com.fjxc.csb.domain.resource.ListToolResourceField">
+        <result column="RESOURCE_ID" jdbcType="DECIMAL" property="resourceId"/>
+        <result column="FIELD_NAME" jdbcType="VARCHAR" property="fieldName"/>
+        <result column="SHOW_NAME" jdbcType="VARCHAR" property="showName"/>
+        <result column="TARGET_TYPE" jdbcType="VARCHAR" property="targetType"/>
+        <result column="TARGET_URL" jdbcType="VARCHAR" property="targetUrl"/>
+        <result column="INDEX_NO" jdbcType="DECIMAL" property="indexNo"/>
+        <result column="PARAM_GROUP_KEY" jdbcType="VARCHAR" property="paramGroupKey"/>
+        <result column="SEARCH_TYPE" jdbcType="DECIMAL" property="searchType"/>
+        <result column="SORT_TYPE" jdbcType="DECIMAL" property="sortType"/>
+        <result column="FIELD_TYPE" jdbcType="DECIMAL" property="fieldType"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    RESOURCE_ID, UPPER(FIELD_NAME) AS FIELD_NAME, SHOW_NAME, TARGET_TYPE, TARGET_URL, INDEX_NO, PARAM_GROUP_KEY, SEARCH_TYPE, SORT_TYPE, FIELD_TYPE
+  </sql>
+    <select id="listByResourceId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from LIST_TOOL_RESOURCE_FIELD
+        where RESOURCE_ID = #{resourceId, jdbcType=DECIMAL}
+    </select>
+
+    <select id="listNeedResetParamField" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        UPPER(FIELD_NAME) AS FIELD_NAME, PARAM_GROUP_KEY
+        from LIST_TOOL_RESOURCE_FIELD
+        where search_type in (3, 6)
+        and RESOURCE_ID = #{resourceId, jdbcType=DECIMAL}
+    </select>
+</mapper>

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fjxc.csb.dao.ListToolMapper">
+
+    <select id="690013" parameterType="String" resultType="java.util.HashMap">
+    select * from delivery_instruction_posting
+    </select>
+
+    <select id="690023" parameterType="String" resultType="java.util.HashMap">
+        select org_id,
+           materials_no,
+           materials_des,
+           price,
+           create_date,
+           update_date,
+           entrance_device, --0进口件，1国产件
+           crucial_device --0关键件，1非关键件
+      from basic_pri_materials
+    </select>
+
+</mapper>

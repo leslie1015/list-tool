@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fjxc.csb.dao.ListToolMapper">
+    <select id="690015" resultType="java.util.HashMap">
+          select d.abnormal_no,
+                d.materials_no,
+                d.materials_des,
+                d.materials_type,
+                t.reason_name,
+                t.reason_id,
+                t.sap_order,
+                t.status
+            from abnormal_out_detail d
+            left join abnormal_out t
+            on d.ABNORMAL_NO = t.abnormal_no
+            where d.status in (1, 2)
+    </select>
+
+    <select id="690016" resultType="java.util.HashMap">
+          select d.abnormal_no,
+                d.materials_no,
+                d.materials_des,
+                d.materials_type,
+                t.reason_name,
+                t.reason_id,
+                t.sap_order,
+                t.status
+            from abnormal_out_detail d
+            left join abnormal_out t
+            on d.ABNORMAL_NO = t.abnormal_no
+            where d.status = 0
+    </select>
+</mapper>

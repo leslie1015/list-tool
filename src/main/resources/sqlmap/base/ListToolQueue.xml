@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.fjxc.csb.dao.resource.ListToolQueueMapper">
+    <resultMap id="BaseResultMap" type="com.fjxc.csb.domain.resource.ListToolQueue">
+        <id column="QUEUE_ID" jdbcType="DECIMAL" property="queueId"  />
+        <result column="RESOURCE_ID" jdbcType="DECIMAL" property="resourceId"/>
+        <result column="PARENT_QUEUE_ID" jdbcType="DECIMAL" property="parentQueueId"/>
+        <result column="RESOURCE_NAME" jdbcType="VARCHAR" property="resourceName"/>
+        <result column="RESOURCE_TYPE" jdbcType="DECIMAL" property="resourceType"/>
+        <result column="RESOURCE_LEVEL" jdbcType="DECIMAL" property="resourceLevel"/>
+        <result column="RESOURCE_URL" jdbcType="VARCHAR" property="resourceUrl"/>
+        <result column="ACTIVE_FLAG" jdbcType="DECIMAL" property="activeFlag"/>
+        <result column="ORDER_NUM" jdbcType="DECIMAL" property="orderNum"/>
+        <result column="APP_TYPE" jdbcType="DECIMAL" property="appType"/>
+        <result column="ADD_TIME" jdbcType="DECIMAL" property="addTime"/>
+        <result column="ADD_NAME" jdbcType="DECIMAL" property="addName"/>
+        <result column="ADD_NO" jdbcType="DECIMAL" property="addNo"/>
+    </resultMap>
+    <sql id="Base_Column_List">
+    QUEUE_ID, RESOURCE_ID, PARENT_QUEUE_ID, RESOURCE_NAME, RESOURCE_LEVEL, RESOURCE_TYPE, RESOURCE_URL, ACTIVE_FLAG, ORDER_NUM, APP_TYPE, ADD_TIME, ADD_NAME, ADD_NO
+    </sql>
+    <select id="getByQueueId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from LIST_TOOL_QUEUE
+        where QUEUE_ID = #{queueId, jdbcType=DECIMAL}
+    </select>
+
+    <select id="listByParentQueueId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from LIST_TOOL_QUEUE
+        where PARENT_QUEUE_ID = #{parentQueueId, jdbcType=DECIMAL}
+    </select>
+
+    <select id="listQueuesByAppType" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from LIST_TOOL_QUEUE
+        where APP_TYPE = #{appType, jdbcType=DECIMAL}
+        and active_flag = 1
+    </select>
+
+</mapper>
