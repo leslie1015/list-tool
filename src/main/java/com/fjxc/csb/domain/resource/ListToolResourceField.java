@@ -35,6 +35,8 @@ public class ListToolResourceField {
 
     private Short fieldType;
 
+    private Short primarykeyFlag;
+
     /**
      * 下拉参数
      */
@@ -136,5 +138,13 @@ public class ListToolResourceField {
 
     public void setFieldType(Short fieldType) {
         this.fieldType = fieldType;
+    }
+
+    public Short getPrimarykeyFlag() {
+        return primarykeyFlag;
+    }
+
+    public void setPrimarykeyFlag(Short primarykeyFlag) {
+        this.primarykeyFlag = primarykeyFlag;
     }
 }

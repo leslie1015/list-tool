@@ -18,6 +18,8 @@ public class ListToolActionInfo {
 
     private Integer orderNum;
 
+    private Integer requestType;
+
     public Integer getResourceId() {
         return resourceId;
     }
@@ -64,5 +66,13 @@ public class ListToolActionInfo {
 
     public void setOrderNum(Integer orderNum) {
         this.orderNum = orderNum;
+    }
+
+    public Integer getRequestType() {
+        return requestType;
+    }
+
+    public void setRequestType(Integer requestType) {
+        this.requestType = requestType;
     }
 }

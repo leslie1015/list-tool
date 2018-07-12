@@ -12,9 +12,10 @@
         <result column="SEARCH_TYPE" jdbcType="DECIMAL" property="searchType"/>
         <result column="SORT_TYPE" jdbcType="DECIMAL" property="sortType"/>
         <result column="FIELD_TYPE" jdbcType="DECIMAL" property="fieldType"/>
+        <result column="PRIMARYKEY_FLAG" jdbcType="DECIMAL" property="primarykeyFlag"/>
     </resultMap>
     <sql id="Base_Column_List">
-    RESOURCE_ID, UPPER(FIELD_NAME) AS FIELD_NAME, SHOW_NAME, TARGET_TYPE, TARGET_URL, INDEX_NO, PARAM_GROUP_KEY, SEARCH_TYPE, SORT_TYPE, FIELD_TYPE
+    RESOURCE_ID, UPPER(FIELD_NAME) AS FIELD_NAME, SHOW_NAME,PRIMARYKEY_FLAG ,TARGET_TYPE, TARGET_URL, INDEX_NO, PARAM_GROUP_KEY, SEARCH_TYPE, SORT_TYPE, FIELD_TYPE
   </sql>
     <select id="listByResourceId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select

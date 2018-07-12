@@ -9,10 +9,11 @@
         <result column="BUTTON_STYLE" jdbcType="VARCHAR" property="buttonStyle"/>
         <result column="CLICK_FUNCTION" jdbcType="VARCHAR" property="clickFunction"/>
         <result column="ORDER_NUM" jdbcType="DECIMAL" property="orderNum"/>
+        <result column="REQUEST_TYPE" jdbcType="DECIMAL" property="requestType"/>
 
     </resultMap>
     <sql id="Base_Column_List">
-      BUTTON_TAG, SHOW_NAME, BUTTON_STYLE, CLICK_FUNCTION
+      BUTTON_TAG, SHOW_NAME, BUTTON_STYLE, CLICK_FUNCTION,REQUEST_TYPE
     </sql>
 
     <select id="listByResourceId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
