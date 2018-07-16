@@ -13,9 +13,11 @@
         <result column="SORT_TYPE" jdbcType="DECIMAL" property="sortType"/>
         <result column="FIELD_TYPE" jdbcType="DECIMAL" property="fieldType"/>
         <result column="PRIMARYKEY_FLAG" jdbcType="DECIMAL" property="primarykeyFlag"/>
+        <result column="IS_DATE" jdbcType="DECIMAL" property="isDate"/>
+        <result column="DATE_FORMAT_TYPE" jdbcType="VARCHAR" property="dateFormatType"/>
     </resultMap>
     <sql id="Base_Column_List">
-    RESOURCE_ID, UPPER(FIELD_NAME) AS FIELD_NAME, SHOW_NAME,PRIMARYKEY_FLAG ,TARGET_TYPE, TARGET_URL, INDEX_NO, PARAM_GROUP_KEY, SEARCH_TYPE, SORT_TYPE, FIELD_TYPE
+    RESOURCE_ID, UPPER(FIELD_NAME) AS FIELD_NAME, SHOW_NAME,PRIMARYKEY_FLAG ,TARGET_TYPE, TARGET_URL, INDEX_NO, PARAM_GROUP_KEY, SEARCH_TYPE, SORT_TYPE, FIELD_TYPE, IS_DATE, DATE_FORMAT_TYPE
   </sql>
     <select id="listByResourceId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select

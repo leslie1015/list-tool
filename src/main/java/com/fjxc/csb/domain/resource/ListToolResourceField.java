@@ -37,12 +37,32 @@ public class ListToolResourceField {
 
     private Short primarykeyFlag;
 
+    private Short isDate;
+
+    private String dateFormatType;
+
     /**
      * 下拉参数
      */
     List<SimpleParam> selectParams;
 
     List<ListToolActionInfo> actions;
+
+    public Short getIsDate() {
+        return isDate;
+    }
+
+    public void setIsDate(Short isDate) {
+        this.isDate = isDate;
+    }
+
+    public String getDateFormatType() {
+        return dateFormatType;
+    }
+
+    public void setDateFormatType(String dateFormatType) {
+        this.dateFormatType = dateFormatType;
+    }
 
     public List<ListToolActionInfo> getActions() {
         return actions;

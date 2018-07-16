@@ -13,6 +13,26 @@ public class SearchVO {
 
     private String currentPageNo;
 
+    private String sortField;
+
+    private String sortType;
+
+    public String getSortField() {
+        return sortField;
+    }
+
+    public void setSortField(String sortField) {
+        this.sortField = sortField;
+    }
+
+    public String getSortType() {
+        return sortType;
+    }
+
+    public void setSortType(String sortType) {
+        this.sortType = sortType;
+    }
+
     public String getPageSize() {
         return pageSize;
     }

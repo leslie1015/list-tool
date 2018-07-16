@@ -13,6 +13,7 @@ import com.fjxc.csb.service.SearchService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -45,7 +46,12 @@ public class SearchServiceImpl implements SearchService {
     public PageResult<HashMap<String, Object>> search(SearchVO searchVO) throws Exception {
         // 分页插件应用
         List<SearchParam> searchParams = JSON.parseArray(searchVO.getParamsJson(), SearchParam.class);
-        PageHelper.startPage(Integer.valueOf(searchVO.getCurrentPageNo()), Integer.valueOf(searchVO.getPageSize()));
+
+        if (StringUtils.isNotBlank(searchVO.getSortField())) {
+            PageHelper.startPage(Integer.valueOf(searchVO.getCurrentPageNo()), Integer.valueOf(searchVO.getPageSize()),searchVO.getSortField() + " " +searchVO.getSortType());
+        } else {
+            PageHelper.startPage(Integer.valueOf(searchVO.getCurrentPageNo()), Integer.valueOf(searchVO.getPageSize()));
+        }
         List<HashMap<String, Object>> list = listToolMapper.executeSearch(searchVO.getResourceId(), searchParams);
         PageInfo<HashMap<String, Object>> pageInfo = new PageInfo<>(reSetBasicParam(Integer.valueOf(searchVO.getResourceId()), list));
         return new PageResult<>(pageInfo.getTotal(), list);
