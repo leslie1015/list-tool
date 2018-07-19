@@ -1,11 +1,13 @@
 package com.fjxc.csb.service.impl.resource;
 
+import com.fjxc.csb.constants.SystemConstants;
 import com.fjxc.csb.dao.resource.ListToolResourceFieldMapper;
 import com.fjxc.csb.domain.enumerate.SearchParamEnum;
 import com.fjxc.csb.domain.resource.ListToolResourceField;
 import com.fjxc.csb.service.parameter.BasicParameterService;
 import com.fjxc.csb.service.resource.ListToolActionInfoService;
 import com.fjxc.csb.service.resource.ListToolResourceFieldService;
+import com.fjxc.csb.util.RedisUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
@@ -25,8 +27,16 @@ public class ListToolResourceFieldServiceImpl implements ListToolResourceFieldSe
     @Autowired
     private ListToolActionInfoService listToolActionInfoService;
 
+    @Autowired
+    private RedisUtils redisUtils;
+
     @Override
     public List<ListToolResourceField> listByResourceId(Integer resourceId) {
+
+        String redisKey = SystemConstants.REDIS_KEY_PREFIX_RESOURCE_FIELD + resourceId;
+        if (redisUtils.exists(redisKey)) {
+            return (List<ListToolResourceField>) redisUtils.get(redisKey);
+        }
 
         List<ListToolResourceField> fieldInfo = listToolResourceFieldMapper.listByResourceId(resourceId);
         sort(fieldInfo);
@@ -39,6 +49,7 @@ public class ListToolResourceFieldServiceImpl implements ListToolResourceFieldSe
                 field.setActions(listToolActionInfoService.listByResourceId(resourceId));
             }
         }
+        redisUtils.set(redisKey, fieldInfo, SystemConstants.REDIS_EXPIRED_TIME);
         return fieldInfo;
     }
 

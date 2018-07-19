@@ -15,7 +15,7 @@
 
     <plugins>
 
-        <!--这两个插件顺序不可改变，次顺序可以确保先拼接查询条件，再拼接分页语句-->
+        <!--这两个插件顺序不可改变，此顺序可以确保先拼接查询条件，再拼接分页语句-->
         <plugin interceptor="com.github.pagehelper.PageInterceptor">
             <!-- 该参数默认为false -->
             <!-- 设置为true时，会将RowBounds第一个参数offset当成pageNum页码使用 -->

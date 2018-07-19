@@ -29,10 +29,4 @@ public class SearchController {
     public String list(SearchVO searchVO)throws Exception {
         return JSON.toJSONString(searchService.search(searchVO));
     }
-
-    @RequestMapping(value = "/config/{resourceId}" ,method = RequestMethod.GET)
-    @ApiOperation(value = "列表配置")
-    public String config(@PathVariable String resourceId)throws Exception {
-        return JSON.toJSONString(searchService.config(resourceId));
-    }
 }

@@ -1,10 +1,10 @@
 package com.fjxc.csb.service.impl.resource;
 
+import com.fjxc.csb.constants.SystemConstants;
 import com.fjxc.csb.dao.resource.ListToolQueueMapper;
 import com.fjxc.csb.domain.resource.ListToolQueue;
 import com.fjxc.csb.service.resource.ListToolQueueService;
-import com.github.pagehelper.PageHelper;
-import com.github.pagehelper.PageInfo;
+import com.fjxc.csb.util.RedisUtils;
 import net.sf.json.JSONArray;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
@@ -22,6 +22,9 @@ public class ListToolQueueServiceImpl implements ListToolQueueService {
     @Autowired
     private ListToolQueueMapper listToolQueueMapper;
 
+    @Autowired
+    private RedisUtils redisUtils;
+
     @Override
     public ListToolQueue getByQueueId(Integer queueId) {
         return listToolQueueMapper.getByQueueId(queueId);
@@ -34,9 +37,15 @@ public class ListToolQueueServiceImpl implements ListToolQueueService {
 
     @Override
     public String getMenuJson(Integer appType) {
-        List<ListToolQueue> queues = listToolQueueMapper.listQueuesByAppType(appType);
 
-        return JSONArray.fromObject(buildMenuList(queues)).toString();
+        String redisKey = SystemConstants.REDIS_KEY_PREFIX_MENU + appType;
+        if (redisUtils.exists(redisKey)) {
+            return (String) redisUtils.get(redisKey);
+        }
+        List<ListToolQueue> queues = listToolQueueMapper.listQueuesByAppType(appType);
+        String menuJson = JSONArray.fromObject(buildMenuList(queues)).toString();
+        redisUtils.set(redisKey, menuJson, SystemConstants.REDIS_EXPIRED_TIME);
+        return menuJson;
     }
 
     /**

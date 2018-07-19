@@ -15,13 +15,13 @@ public enum AppTypeEnum {
 
     private String appDesc;
 
-    private AppTypeEnum(Integer enumpType, String appShortName, String appDesc) {
+    AppTypeEnum(Integer enumpType, String appShortName, String appDesc) {
         this.enumpType = enumpType;
         this.appShortName = appShortName;
         this.appDesc = appDesc;
     }
 
-    private AppTypeEnum() {
+    AppTypeEnum() {
 
     }
 }

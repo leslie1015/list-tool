@@ -12,4 +12,6 @@ import java.util.List;
 public interface BasicParameterService {
 
     List<SimpleParam> listKeyValByGroupKey(String groupKey);
+
+    String getParamByKey(String groupKey, String key);
 }

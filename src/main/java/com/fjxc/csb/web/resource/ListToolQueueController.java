@@ -28,8 +28,6 @@ public class ListToolQueueController {
 
     @RequestMapping(value = "/getAppMenu/{appType}" ,method = RequestMethod.GET)
     @ApiOperation(value = "获取菜单信息")
-    //允许跨域请求的注解
-//    @CrossOrigin(allowCredentials="true", allowedHeaders="*", methods={RequestMethod.GET}, origins="*")
     public String getMenuData(@PathVariable Integer appType) throws Exception{
         return listToolQueueService.getMenuJson(appType);
     }

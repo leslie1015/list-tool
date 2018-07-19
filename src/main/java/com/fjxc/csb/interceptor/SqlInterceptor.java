@@ -1,6 +1,6 @@
 package com.fjxc.csb.interceptor;
 
-import com.fjxc.csb.constants.SystemcCnstants;
+import com.fjxc.csb.constants.SystemConstants;
 import com.fjxc.csb.domain.enumerate.SearchParamEnum;
 import com.fjxc.csb.domain.resource.SearchParam;
 import com.fjxc.csb.resultfilter.ResultFilterService;
@@ -114,7 +114,7 @@ public class SqlInterceptor implements Interceptor {
      * @return
      */
     private boolean isListSearch(String mapperPath) {
-        Pattern pat = Pattern.compile("^" + SystemcCnstants.MAPPPER_PATH);
+        Pattern pat = Pattern.compile("^" + SystemConstants.MAPPPER_PATH);
         Matcher matcher = pat.matcher(mapperPath);
         return matcher.find();
     }
@@ -146,16 +146,15 @@ public class SqlInterceptor implements Interceptor {
                 continue;
             }
             if (SearchParamEnum.FUZZY.getType().equals(param.getType())) {
-                sb.append(" and ").append(param.getFieldName()).append(" like '%").append(param.getValue()).append("%'");
+                sb.append(" and ").append(param.getFieldName()).append(" like '%").append(param.getValue().trim()).append("%'");
             } else if (SearchParamEnum.EXACT.getType().equals(param.getType())) {
-                sb.append(" and ").append(param.getFieldName()).append(" = ").append("'").append(param.getValue()).append("'");
+                sb.append(" and ").append(param.getFieldName()).append(" = ").append("'").append(param.getValue().trim()).append("'");
             } else if (SearchParamEnum.DROP_DOWN.getType().equals(param.getType())) {
                 sb.append(" and ").append(param.getFieldName()).append(" = ").append(param.getValue());
-            }
-            else if (SearchParamEnum.DATE_INTERVAL.getType().equals(param.getType())) {
+            } else if (SearchParamEnum.DATE_INTERVAL.getType().equals(param.getType())) {
                 String lessOrMoreCode = SearchParam.MORE_TYPE.equals(param.getMoreOrLessType()) ? " >= " : " <= ";
                 String exaceTime = SearchParam.MORE_TYPE.equals(param.getMoreOrLessType()) ? " 00:00:00" : " 23:59:59";
-                sb.append(" and ").append(param.getFieldName()).append(lessOrMoreCode).append(" to_date(").append("'").append(param.getValue()).append(exaceTime).append("'").append(", 'yyyy-mm-dd hh24:mi:ss')");
+                sb.append(" and ").append(param.getFieldName()).append(lessOrMoreCode).append(" to_date(").append("'").append(param.getValue().trim()).append(exaceTime).append("'").append(", 'yyyy-mm-dd hh24:mi:ss')");
             } else if (SearchParamEnum.NUMBER_INTERVAL.getType().equals(param.getType())) {
                 String lessOrMoreCode = SearchParam.MORE_TYPE.equals(param.getMoreOrLessType()) ? " >= " : " <= ";
                 sb.append(" and ").append(param.getFieldName()).append(lessOrMoreCode).append(param.getValue());
@@ -167,10 +166,5 @@ public class SqlInterceptor implements Interceptor {
             }
         }
         return sb.toString();
-    }
-
-    private String buildSqlByOrder(String sql, List<SearchParam> paramList) {
-
-        return null;
     }
 }

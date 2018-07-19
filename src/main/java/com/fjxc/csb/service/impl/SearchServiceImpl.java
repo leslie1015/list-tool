@@ -2,7 +2,6 @@ package com.fjxc.csb.service.impl;
 
 import com.alibaba.fastjson.JSON;
 import com.fjxc.csb.dao.ListToolMapper;
-import com.fjxc.csb.dao.parameter.BasicParameterMapper;
 import com.fjxc.csb.dao.resource.ListToolResourceFieldMapper;
 import com.fjxc.csb.domain.PageResult;
 import com.fjxc.csb.domain.resource.ListToolResourceField;
@@ -10,6 +9,7 @@ import com.fjxc.csb.domain.resource.SearchParam;
 import com.fjxc.csb.domain.resource.SearchVO;
 import com.fjxc.csb.service.SearchService;
 
+import com.fjxc.csb.service.parameter.BasicParameterService;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 import org.apache.commons.collections.CollectionUtils;
@@ -32,7 +32,7 @@ public class SearchServiceImpl implements SearchService {
     private ListToolResourceFieldMapper listToolResourceFieldMapper;
 
     @Autowired
-    private BasicParameterMapper basicParameterMapper;
+    private BasicParameterService basicParameterService;
 
     @Override
     public PageResult<HashMap<String, Object>> list(String resourceId) throws Exception {
@@ -71,22 +71,15 @@ public class SearchServiceImpl implements SearchService {
         if (CollectionUtils.isEmpty(fieldList)) {
             return mapList;
         }
+
         for (HashMap<String, Object> map : mapList) {
             for (ListToolResourceField field : fieldList) {
                 //
                 String paramKey = String.valueOf(map.get(field.getFieldName()));
-                String value = basicParameterMapper.getValueByKey(field.getParamGroupKey(), paramKey);
+                String value = basicParameterService.getParamByKey(field.getParamGroupKey(), paramKey);
                 map.put(field.getFieldName(), value);
             }
         }
         return mapList;
     }
-
-
-    @Override
-    public String config(String resourceId) throws Exception {
-
-        return null;
-    }
-
 }

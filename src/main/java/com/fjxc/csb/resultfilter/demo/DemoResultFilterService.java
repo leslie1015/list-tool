@@ -1,6 +1,6 @@
 package com.fjxc.csb.resultfilter.demo;
 
-import com.fjxc.csb.constants.SystemcCnstants;
+import com.fjxc.csb.constants.SystemConstants;
 import com.fjxc.csb.resultfilter.ResultFilterService;
 import org.springframework.stereotype.Service;
 
@@ -11,7 +11,7 @@ import java.util.*;
  * sql中包含子查询，且子查询的表数据量过大，导致sql查询很慢，可以在sql中只查询表的主键，然后用
  * 主键在此查询出结果放入结果集返回
  */
-@Service(SystemcCnstants.MAPPPER_PATH + "690001")
+@Service(SystemConstants.MAPPPER_PATH + "690001")
 public class DemoResultFilterService extends ResultFilterService {
     @Override
     public List<HashMap> resultFilter(List<HashMap> result) {

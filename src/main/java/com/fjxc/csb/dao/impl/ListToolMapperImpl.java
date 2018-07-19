@@ -24,26 +24,37 @@ public class ListToolMapperImpl implements ListToolMapper {
 //    public ListToolMapperImpl(SqlSessionFactory sqlSessionFactory) {
 //        this.sqlSessionFactory = sqlSessionFactory;
 //    }
-
     @Override
     public List<HashMap<String, Object>> executeSearch(String resourceId) {
+        SqlSession sqlSession = null;
+        List<HashMap<String, Object>> list;
+        try {
+            sqlSession = sqlSessionFactory.openSession();
+            list = sqlSession.selectList(resourceId);
 
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-        List<HashMap<String, Object>> list = sqlSession.selectList(resourceId);
-
+        } finally {
+            if (null != sqlSession) {
+                sqlSession.close();
+            }
+        }
         //释放资源
-        sqlSession.close();
         return list;
     }
 
 
-
     @Override
     public List<HashMap<String, Object>> executeSearch(String resourceId, List<SearchParam> params) {
-        SqlSession sqlSession = sqlSessionFactory.openSession();
-        List<HashMap<String, Object>> list = sqlSession.selectList(resourceId, params);
-        //释放资源
-        sqlSession.close();
+        SqlSession sqlSession = null;
+        List<HashMap<String, Object>> list;
+        try {
+            sqlSession = sqlSessionFactory.openSession();
+            list = sqlSession.selectList(resourceId, params);
+        } finally {
+            //释放资源
+            if (null != sqlSession) {
+                sqlSession.close();
+            }
+        }
         return list;
     }
 }
