@@ -7,7 +7,7 @@ public class SystemConstants {
 
     //Redis Key
     // REDIS 过期时间
-    public static final Long REDIS_EXPIRED_TIME = 120L;
+    public static final Long REDIS_EXPIRED_TIME = 8*60*60L;
 
     /**
      * 菜单redis key前缀
