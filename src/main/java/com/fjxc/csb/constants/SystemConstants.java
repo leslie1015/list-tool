@@ -1,5 +1,7 @@
 package com.fjxc.csb.constants;
-
+/**
+ * @author wangyong
+ */
 public class SystemConstants {
 
     public static final String MAPPPER_PATH = "com.fjxc.csb.dao.ListToolMapper.";

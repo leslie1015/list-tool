@@ -3,6 +3,9 @@ package com.fjxc.csb.config.redis;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.stereotype.Component;
 
+/**
+ * @author wangyong
+ */
 @Component
 @ConfigurationProperties(prefix = "spring.redis")
 public class RedisConn {

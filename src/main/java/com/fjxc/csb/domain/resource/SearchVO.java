@@ -1,5 +1,8 @@
 package com.fjxc.csb.domain.resource;
 
+/**
+ * @author wangyong
+ */
 public class SearchVO {
 
     private String resourceId;

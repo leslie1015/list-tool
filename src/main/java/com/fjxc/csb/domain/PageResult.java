@@ -2,6 +2,9 @@ package com.fjxc.csb.domain;
 
 import java.util.List;
 
+/**
+ * @author wangyong
+ */
 public class PageResult<T> {
 
     private Long total;
