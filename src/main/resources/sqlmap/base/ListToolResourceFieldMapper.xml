@@ -30,7 +30,7 @@
         select
         UPPER(FIELD_NAME) AS FIELD_NAME, PARAM_GROUP_KEY
         from LIST_TOOL_RESOURCE_FIELD
-        where search_type in (3, 6)
+        where (param_group_key is not null and param_group_key != '')
         and RESOURCE_ID = #{resourceId, jdbcType=DECIMAL}
     </select>
 </mapper>

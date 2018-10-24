@@ -1,4 +1,7 @@
 
+---------------------------------------------------------------------------------
+-------------------------------ORACLE中建表语句------------------------------------
+---------------------------------------------------------------------------------
 create table xgbj.LIST_TOOL_QUEUE(
 queue_id              number(5) UNIQUE NOT NULL,
 resource_id           number(6) NOT NULL,
@@ -30,3 +33,23 @@ COMMENT ON COLUMN xgbj.LIST_TOOL_QUEUE.app_type IS '所属应用,定义在枚举
 COMMENT ON COLUMN xgbj.LIST_TOOL_QUEUE.add_time IS '添加时间';
 COMMENT ON COLUMN xgbj.LIST_TOOL_QUEUE.add_no IS '添加人编号';
 COMMENT ON COLUMN xgbj.LIST_TOOL_QUEUE.add_name IS '添加人';
+
+---------------------------------------------------------------------------------
+-------------------------------MYSQL中建表语句------------------------------------
+---------------------------------------------------------------------------------
+
+create table cb.LIST_TOOL_QUEUE(
+queue_id              decimal(5) UNIQUE NOT NULL comment '队列ID',
+resource_id           decimal(6) NOT NULL comment '资源ID',
+parent_queue_id       decimal(6) default 0 comment '父级菜单ID, 无父级菜单默认0',
+resource_name         varchar(50) NOT NULL comment '资源名称',
+resource_type         decimal(1) NOT NULL comment '资源类型：1.按钮，2.资源链接，3.子资源汇总页面链接。为2,3时resource_url不能为空',
+resource_level        decimal(2) NOT NULL comment '菜单资源等级 1一级标题，2二级标题，3三级标题，4四级标题',
+resource_url          varchar(100) comment '资源链接',
+active_flag           decimal(1) default 1 NOT NULL comment '0禁用，1启用',
+order_num             decimal(3) comment '排序编号，数字小的菜单在上面，只针对同一父菜单下同级别菜单排序',
+app_type              decimal(3) NOT NULL comment '所属应用,定义在枚举类AppTypeEnum中',
+add_time              DATETIME NOT NULL comment '添加时间',
+add_name              varchar(50) NOT NULL comment '添加人编号',
+add_no                varchar(50) NOT NULL comment '添加人'
+ )ENGINE=InnoDB  DEFAULT CHARSET=utf8 comment='队列资源表'

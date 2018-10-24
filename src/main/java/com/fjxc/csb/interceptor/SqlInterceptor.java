@@ -67,7 +67,7 @@ public class SqlInterceptor implements Interceptor {
         }
         List<HashMap> result = executor.query(ms, parameter, rowBounds, resultHandler, cacheKey, boundSql);
         // 如果不是列表查询，直接返回查询结果
-        if (isListSearch(ms.getId())) {
+        if (!isListSearch(ms.getId())) {
             return result;
         }
         // 以下过滤只针对当前页面数据，不会全量，因此效率上面也有保证
@@ -140,7 +140,7 @@ public class SqlInterceptor implements Interceptor {
         if (CollectionUtils.isEmpty(paramList)) {
             return oldsql;
         }
-        StringBuilder sb = new StringBuilder(" select * from (").append(oldsql).append(") where 1 = 1 ");
+        StringBuilder sb = new StringBuilder(" select * from (").append(oldsql).append(") as aa where 1 = 1 ");
         for (SearchParam param : paramList) {
             if (null == param || StringUtils.isBlank(param.getValue()) || SearchParamEnum.NOT_SEARCH.getType().equals(param.getType())) {
                 continue;
@@ -154,7 +154,13 @@ public class SqlInterceptor implements Interceptor {
             } else if (SearchParamEnum.DATE_INTERVAL.getType().equals(param.getType())) {
                 String lessOrMoreCode = SearchParam.MORE_TYPE.equals(param.getMoreOrLessType()) ? " >= " : " <= ";
                 String exaceTime = SearchParam.MORE_TYPE.equals(param.getMoreOrLessType()) ? " 00:00:00" : " 23:59:59";
-                sb.append(" and ").append(param.getFieldName()).append(lessOrMoreCode).append(" to_date(").append("'").append(param.getValue().trim()).append(exaceTime).append("'").append(", 'yyyy-mm-dd hh24:mi:ss')");
+                //ORACLE写法
+//                sb.append(" and ").append(param.getFieldName()).append(lessOrMoreCode).append(" to_date(").append("'")
+//                        .append(param.getValue().trim()).append(exaceTime).append("'").append(", 'yyyy-mm-dd hh24:mi:ss')");
+
+                //MYSQL写法
+                sb.append(" and ").append(param.getFieldName()).append(lessOrMoreCode).append(" str_to_date(").append("'")
+                        .append(param.getValue().trim()).append(exaceTime).append("'").append(", '%Y-%m-%d %H:%i:%s')");
             } else if (SearchParamEnum.NUMBER_INTERVAL.getType().equals(param.getType())) {
                 String lessOrMoreCode = SearchParam.MORE_TYPE.equals(param.getMoreOrLessType()) ? " >= " : " <= ";
                 sb.append(" and ").append(param.getFieldName()).append(lessOrMoreCode).append(param.getValue());

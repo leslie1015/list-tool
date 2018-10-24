@@ -9,8 +9,24 @@
           from abnormal_out
     </select>
 
-    <select id="690026"  resultType="java.util.HashMap">
-              select * from abnormal_out
+    <select id="690002"  resultType="java.util.HashMap">
+              select
+                  com_id,
+                  com_name,
+                  com_type,
+                  industry_type,
+                  legal_person,
+                  zip_code,
+                  phone1,
+                  email,
+                  address,
+                  active_flag,
+                  create_time,
+                  service_start_time,
+                  service_end_time,
+                  company_desc,
+                  remark
+                  from company_info
     </select>
 
 </mapper>

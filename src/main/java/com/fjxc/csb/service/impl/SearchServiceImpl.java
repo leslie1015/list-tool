@@ -48,7 +48,7 @@ public class SearchServiceImpl implements SearchService {
         List<SearchParam> searchParams = JSON.parseArray(searchVO.getParamsJson(), SearchParam.class);
 
         if (StringUtils.isNotBlank(searchVO.getSortField())) {
-            PageHelper.startPage(Integer.valueOf(searchVO.getCurrentPageNo()), Integer.valueOf(searchVO.getPageSize()),searchVO.getSortField() + " " +searchVO.getSortType());
+            PageHelper.startPage(Integer.valueOf(searchVO.getCurrentPageNo()), Integer.valueOf(searchVO.getPageSize()), searchVO.getSortField() + " " + searchVO.getSortType());
         } else {
             PageHelper.startPage(Integer.valueOf(searchVO.getCurrentPageNo()), Integer.valueOf(searchVO.getPageSize()));
         }
@@ -74,10 +74,12 @@ public class SearchServiceImpl implements SearchService {
 
         for (HashMap<String, Object> map : mapList) {
             for (ListToolResourceField field : fieldList) {
-                //
-                String paramKey = String.valueOf(map.get(field.getFieldName()));
+                //大小写处理，不做大小写的区分
+                String mapKey = null == field.getFieldName() ? StringUtils.EMPTY : field.getFieldName();
+                String paramKey = null == map.get(mapKey.toUpperCase()) ?
+                        String.valueOf(map.get(mapKey.toLowerCase())) : String.valueOf(map.get(mapKey.toUpperCase()));
                 String value = basicParameterService.getParamByKey(field.getParamGroupKey(), paramKey);
-                map.put(field.getFieldName(), value);
+                map.put(mapKey, StringUtils.isBlank(value) ? paramKey : value);
             }
         }
         return mapList;
