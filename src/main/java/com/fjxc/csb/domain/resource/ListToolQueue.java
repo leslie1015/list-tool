@@ -19,7 +19,7 @@ public class ListToolQueue {
 
     private Integer resourceLevel;
 
-    private Short resourceType;
+    private String resourceType;
 
     private String resourceUrl;
 
@@ -35,7 +35,26 @@ public class ListToolQueue {
 
     private String addName;
 
+    private Boolean expanded = false;
+    private String selected = "false";
+
     private List<ListToolQueue> childQueues;
+
+    public Boolean getExpanded() {
+        return expanded;
+    }
+
+    public void setExpanded(Boolean expanded) {
+        this.expanded = expanded;
+    }
+
+    public String getSelected() {
+        return selected;
+    }
+
+    public void setSelected(String selected) {
+        this.selected = selected;
+    }
 
     public Integer getQueueId() {
         return queueId;
@@ -69,11 +88,11 @@ public class ListToolQueue {
         this.resourceName = resourceName;
     }
 
-    public Short getResourceType() {
+    public String getResourceType() {
         return resourceType;
     }
 
-    public void setResourceType(Short resourceType) {
+    public void setResourceType(String resourceType) {
         this.resourceType = resourceType;
     }
 

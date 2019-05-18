@@ -6,7 +6,7 @@
         <result column="RESOURCE_ID" jdbcType="DECIMAL" property="resourceId"/>
         <result column="PARENT_QUEUE_ID" jdbcType="DECIMAL" property="parentQueueId"/>
         <result column="RESOURCE_NAME" jdbcType="VARCHAR" property="resourceName"/>
-        <result column="RESOURCE_TYPE" jdbcType="DECIMAL" property="resourceType"/>
+        <result column="RESOURCE_TYPE" jdbcType="VARCHAR" property="resourceType"/>
         <result column="RESOURCE_LEVEL" jdbcType="DECIMAL" property="resourceLevel"/>
         <result column="RESOURCE_URL" jdbcType="VARCHAR" property="resourceUrl"/>
         <result column="ACTIVE_FLAG" jdbcType="DECIMAL" property="activeFlag"/>
