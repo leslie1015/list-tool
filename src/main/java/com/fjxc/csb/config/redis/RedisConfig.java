@@ -21,6 +21,7 @@ import org.springframework.data.redis.serializer.Jackson2JsonRedisSerializer;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * @author wangyong
@@ -56,39 +57,6 @@ public class RedisConfig extends CachingConfigurerSupport {
 
     }
 
-    /**
-     * 管理缓存
-     *
-     * @param redisTemplate
-     * @return
-     */
-
-    @SuppressWarnings("rawtypes")
-    @Bean
-    public CacheManager CacheManager(RedisTemplate redisTemplate) {
-        RedisCacheManager rcm = new RedisCacheManager(redisTemplate);
-        // 设置cache过期时间,时间单位是秒
-        rcm.setDefaultExpiration(60);
-        Map<String, Long> map = new HashMap<String, Long>();
-        map.put("test", 60L);
-        rcm.setExpires(map);
-        return rcm;
-    }
-
-    /**
-     * redis 数据库连接池
-     * @return
-     */
-
-    @Bean
-    public JedisConnectionFactory redisConnectionFactory() {
-        JedisConnectionFactory factory = new JedisConnectionFactory();
-        factory.setHostName(redisConn.getHost());
-        factory.setPort(redisConn.getPort());
-        // 设置连接超时时间
-        factory.setTimeout(redisConn.getTimeout());
-        return factory;
-    }
 
     /**
      * redisTemplate配置
@@ -109,5 +77,29 @@ public class RedisConfig extends CachingConfigurerSupport {
         template.afterPropertiesSet();
         return template;
     }
+
+//    @Bean
+//    RedisTemplate<String, Object> redisTemplate(RedisConnectionFactory redisConnectionFactory) {
+//
+//        RedisTemplate<String, Object> template = new RedisTemplate<>();
+//        template.setConnectionFactory(redisConnectionFactory);
+//
+//        //使用Jackson2JsonRedisSerializer来序列化和反序列化redis的value值
+//        Jackson2JsonRedisSerializer serializer = new Jackson2JsonRedisSerializer(Object.class);
+//
+//        ObjectMapper mapper = new ObjectMapper();
+//        mapper.setVisibility(PropertyAccessor.ALL, JsonAutoDetect.Visibility.ANY);
+//        mapper.enableDefaultTyping(ObjectMapper.DefaultTyping.NON_FINAL);
+//        serializer.setObjectMapper(mapper);
+//
+//        template.setValueSerializer(serializer);
+//        //使用StringRedisSerializer来序列化和反序列化redis的key值
+//        template.setKeySerializer(new StringRedisSerializer());
+//        template.setHashKeySerializer(new StringRedisSerializer());
+//        template.setHashValueSerializer(serializer);
+//        template.afterPropertiesSet();
+//        return template;
+//    }
+
 
 }

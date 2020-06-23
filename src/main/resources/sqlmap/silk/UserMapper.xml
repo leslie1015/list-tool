@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fjxc.csb.dao.ListToolMapper">
+
+
+  <!--所有用户-->
+  <select id="300001" parameterType="java.lang.String" resultType="java.util.HashMap">
+      select id, nickname, username, admin_flag, status, delete_flag, create_time, last_time
+      from user_info
+  </select>
+
+  <!--正常的用户-->
+  <select id="300002" parameterType="java.lang.String" resultType="java.util.HashMap">
+      select id, nickname, username, create_time, last_time
+      from user_info
+      where admin_flag = 0 and status = 0 and delete_flag = 0
+  </select>
+
+  <!--冻结的用户-->
+  <select id="300003" parameterType="java.lang.String" resultType="java.util.HashMap">
+       select id, nickname, username, create_time, last_time
+      from user_info
+      where admin_flag = 0 and status = 1 and delete_flag = 0
+  </select>
+
+  <!--管理员用户-->
+  <select id="300004" parameterType="java.lang.String" resultType="java.util.HashMap">
+      select id, nickname, username, status, delete_flag, create_time, last_time
+      from user_info
+      where admin_flag = 1
+  </select>
+
+  <!--30天未登录用户-->
+  <select id="300005" parameterType="java.lang.String" resultType="java.util.HashMap">
+      select id, nickname, username, create_time, last_time
+      from user_info
+      where admin_flag = 0 and status = 0 and delete_flag = 0
+      and DATE_ADD(last_time,INTERVAL 30 DAY) &lt; now()
+  </select>
+
+</mapper>

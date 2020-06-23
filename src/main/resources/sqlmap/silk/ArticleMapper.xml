@@ -1,0 +1,85 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.fjxc.csb.dao.ListToolMapper">
+
+  <!--'1草稿，2待审核，3审核通过，4返回修改，5拒绝通过'-->
+
+  <!--所有文章-->
+  <select id="100001" parameterType="java.lang.String" resultType="java.util.HashMap">
+      select id, article_title,STATUS,review_flag,
+      top_flag,ad_flag,recommend_flag,type_id,add_name,add_time,update_name,
+      update_time
+      from t_article
+      where delete_flag = 0
+  </select>
+
+  <!--待审核-->
+  <select id="100002" parameterType="java.lang.String" resultType="java.util.HashMap">
+      select id,type_id, article_title,
+      top_flag,ad_flag,recommend_flag,type_name,add_name,
+      add_time,update_name,
+      update_time
+      from t_article
+      where status = 2 and delete_flag = 0
+  </select>
+
+  <!--审核拒绝-->
+  <select id="100003" parameterType="java.lang.String" resultType="java.util.HashMap">
+      select id, article_title,type_id,
+      type_name,add_name,
+      add_time,update_name,
+      update_time
+      from t_article
+      where status = 5 and delete_flag = 0
+  </select>
+
+  <!--已删除的文章-->
+  <select id="100004" parameterType="java.lang.String" resultType="java.util.HashMap">
+      select id, article_title,
+      status,type_id,type_name,add_name,
+      add_time,update_name,
+      update_time
+      from t_article
+      where delete_flag = 1
+  </select>
+
+  <!--置顶的文章-->
+  <select id="100005" parameterType="java.lang.String" resultType="java.util.HashMap">
+      select id, article_title,status,review_flag,
+      ad_flag,recommend_flag,type_id,type_name,
+      add_name,add_time,update_name
+      from t_article
+      where delete_flag = 0 and top_flag = 1
+  </select>
+
+  <!--广告文章-->
+  <select id="100006" parameterType="java.lang.String" resultType="java.util.HashMap">
+      select id, article_title,status,review_flag,
+      top_flag,recommend_flag,type_name,
+      add_name,add_time,update_name,
+      update_time
+      from t_article
+      where delete_flag = 0 and ad_flag = 1
+  </select>
+
+  <!--推荐的文章-->
+  <select id="100007" parameterType="java.lang.String" resultType="java.util.HashMap">
+      select id, article_title,status,review_flag,
+      top_flag,ad_flag,type_name,
+      add_name,add_time,update_name,
+      update_time
+      from t_article
+      where delete_flag = 0 and recommend_flag = 1
+  </select>
+
+  <!--禁止评论的文章-->
+  <select id="100008" parameterType="java.lang.String" resultType="java.util.HashMap">
+      select id, article_title,status,
+      top_flag,ad_flag,recommend_flag,
+      type_name,add_name,add_time,update_name,
+      update_time
+      from t_article
+      where delete_flag = 0 and review_flag = 0
+  </select>
+
+</mapper>

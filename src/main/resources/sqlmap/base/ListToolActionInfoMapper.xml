@@ -19,7 +19,7 @@
     <select id="listByResourceId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from LIST_TOOL_ACTION_INFO
+        from list_tool_action_info
         where RESOURCE_ID = #{resourceId, jdbcType=DECIMAL}
         order by ORDER_NUM
     </select>

@@ -5,6 +5,7 @@ import com.fjxc.csb.dao.parameter.BasicParameterMapper;
 import com.fjxc.csb.domain.parameter.SimpleParam;
 import com.fjxc.csb.service.parameter.BasicParameterService;
 import com.fjxc.csb.util.RedisUtils;
+import org.apache.commons.lang.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

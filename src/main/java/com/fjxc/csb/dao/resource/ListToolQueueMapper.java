@@ -33,4 +33,18 @@ public interface ListToolQueueMapper {
      */
     List<ListToolQueue> listQueuesByAppType(@Param("appType") Integer appType);
 
+
+    List<ListToolQueue> listMenusByType(@Param("appType") Integer appType, @Param("resourceType") String resourceType);
+
+
+    Integer insert(ListToolQueue queue);
+
+    Integer getMaxQueueId();
+
+    Integer update(ListToolQueue queue);
+
+    Integer countByResourceId(Integer resourceId);
+
+    List<ListToolQueue> list(ListToolQueue queue);
+
 }

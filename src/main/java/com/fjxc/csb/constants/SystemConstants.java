@@ -14,22 +14,22 @@ public class SystemConstants {
     /**
      * 菜单redis key前缀
      */
-    public static final String REDIS_KEY_PREFIX_MENU = "list_tool_menu_apptype_";
+    public static final String REDIS_KEY_PREFIX_MENU = "csb:list_tool_menu_apptype:";
 
     /**
      * 列表配置redis key前缀
      */
-    public static final String REDIS_KEY_PREFIX_RESOURCE_FIELD = "list_tool_resource_field_";
+    public static final String REDIS_KEY_PREFIX_RESOURCE_FIELD = "csb:list_tool_resource_field:";
 
     /**
      * 列操作按钮redis key前缀
      */
-    public static final String REDIS_KEY_PREFIX_FIELD_ACTION = "list_tool_field_action_";
+    public static final String REDIS_KEY_PREFIX_FIELD_ACTION = "csb:list_tool_field_action:";
 
     /**
      * 参数redis key前缀
      */
-    public static final String REDIS_KEY_PREFIX_BASIC_PARAM = "list_tool_basic_param_";
+    public static final String REDIS_KEY_PREFIX_BASIC_PARAM = "csb:list_tool_basic_param:";
 
 
 }

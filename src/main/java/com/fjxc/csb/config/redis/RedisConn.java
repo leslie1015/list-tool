@@ -17,6 +17,8 @@ public class RedisConn {
 
     private int timeout;
 
+    private String password;
+
     public String getHost() {
         return host;
     }
@@ -39,5 +41,13 @@ public class RedisConn {
 
     public void setTimeout(int timeout) {
         this.timeout = timeout;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 }

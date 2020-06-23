@@ -11,6 +11,9 @@ import org.springframework.stereotype.Repository;
 
 import java.util.List;
 
+/**
+ * @author wangyong
+ */
 @Repository
 public class SqlColumnsMapperImpl implements SqlColumnsMapper {
 

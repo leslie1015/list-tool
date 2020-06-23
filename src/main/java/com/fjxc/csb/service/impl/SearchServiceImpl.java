@@ -18,11 +18,12 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import java.util.*;
+import org.springframework.stereotype.Service;
 
 /**
  * @author wangyong
  */
-@Component
+@Service
 public class SearchServiceImpl implements SearchService {
 
     @Autowired
@@ -76,8 +77,15 @@ public class SearchServiceImpl implements SearchService {
             for (ListToolResourceField field : fieldList) {
                 //大小写处理，不做大小写的区分
                 String mapKey = null == field.getFieldName() ? StringUtils.EMPTY : field.getFieldName();
+
                 String paramKey = null == map.get(mapKey.toUpperCase()) ?
                         String.valueOf(map.get(mapKey.toLowerCase())) : String.valueOf(map.get(mapKey.toUpperCase()));
+
+                if (null == map.get(mapKey.toUpperCase())) {
+                    mapKey = mapKey.toLowerCase();
+                } else {
+                    mapKey = mapKey.toUpperCase();
+                }
                 String value = basicParameterService.getParamByKey(field.getParamGroupKey(), paramKey);
                 map.put(mapKey, StringUtils.isBlank(value) ? paramKey : value);
             }

@@ -19,4 +19,8 @@ public interface ListToolResourceFieldMapper {
      */
     List<ListToolResourceField> listNeedResetParamField(@Param("resourceId")Integer resourceId);
 
+    Integer deleteByResourceId(@Param("resourceId")Integer resourceId);
+
+    Integer insert(ListToolResourceField field);
+
 }

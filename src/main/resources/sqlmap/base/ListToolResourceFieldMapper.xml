@@ -5,6 +5,7 @@
         <result column="RESOURCE_ID" jdbcType="DECIMAL" property="resourceId"/>
         <result column="FIELD_NAME" jdbcType="VARCHAR" property="fieldName"/>
         <result column="SHOW_NAME" jdbcType="VARCHAR" property="showName"/>
+        <result column="HIDE_FLAG" jdbcType="VARCHAR" property="hideFlag"/>
         <result column="TARGET_TYPE" jdbcType="VARCHAR" property="targetType"/>
         <result column="TARGET_URL" jdbcType="VARCHAR" property="targetUrl"/>
         <result column="INDEX_NO" jdbcType="DECIMAL" property="indexNo"/>
@@ -14,23 +15,35 @@
         <result column="FIELD_TYPE" jdbcType="DECIMAL" property="fieldType"/>
         <result column="PRIMARYKEY_FLAG" jdbcType="DECIMAL" property="primarykeyFlag"/>
         <result column="IS_DATE" jdbcType="DECIMAL" property="isDate"/>
-        <result column="DATE_FORMAT_TYPE" jdbcType="VARCHAR" property="dateFormatType"/>
+        <result column="DATE_FORMAT_TYPE" jdbcType="DECIMAL" property="dateFormatType"/>
     </resultMap>
     <sql id="Base_Column_List">
-    RESOURCE_ID, UPPER(FIELD_NAME) AS FIELD_NAME, SHOW_NAME,PRIMARYKEY_FLAG ,TARGET_TYPE, TARGET_URL, INDEX_NO, PARAM_GROUP_KEY, SEARCH_TYPE, SORT_TYPE, FIELD_TYPE, IS_DATE, DATE_FORMAT_TYPE
+    RESOURCE_ID, UPPER(FIELD_NAME) AS FIELD_NAME, SHOW_NAME, HIDE_FLAG, PRIMARYKEY_FLAG ,TARGET_TYPE, TARGET_URL, INDEX_NO, PARAM_GROUP_KEY, SEARCH_TYPE, SORT_TYPE, FIELD_TYPE, IS_DATE, DATE_FORMAT_TYPE
   </sql>
     <select id="listByResourceId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from LIST_TOOL_RESOURCE_FIELD
+        from list_tool_resource_field
         where RESOURCE_ID = #{resourceId, jdbcType=DECIMAL}
     </select>
+
+    <delete id="deleteByResourceId" parameterType="java.lang.Integer">
+        delete from list_tool_resource_field
+        where RESOURCE_ID = #{resourceId, jdbcType=DECIMAL}
+    </delete>
 
     <select id="listNeedResetParamField" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         UPPER(FIELD_NAME) AS FIELD_NAME, PARAM_GROUP_KEY
-        from LIST_TOOL_RESOURCE_FIELD
+        from list_tool_resource_field
         where (param_group_key is not null and param_group_key != '')
         and RESOURCE_ID = #{resourceId, jdbcType=DECIMAL}
     </select>
+
+    <insert id="insert" keyProperty="" useGeneratedKeys="true" parameterType="com.fjxc.csb.domain.resource.ListToolResourceField">
+        insert into list_tool_resource_field(resource_id, field_name, show_name, hide_flag, primarykey_flag ,target_type, target_url, index_no,
+         param_group_key, search_type, sort_type, field_type, is_date, date_format_type)
+        values (#{resourceId},#{fieldName},#{showName},#{hideFlag},#{primarykeyFlag},#{targetType},#{targetUrl},#{indexNo},#{paramGroupKey},#{searchType},
+        #{sortType},#{fieldType},#{isDate},#{dateFormatType})
+    </insert>
 </mapper>

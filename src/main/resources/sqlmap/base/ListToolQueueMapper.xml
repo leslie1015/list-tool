@@ -17,28 +17,95 @@
         <result column="ADD_NO" jdbcType="DECIMAL" property="addNo"/>
     </resultMap>
     <sql id="Base_Column_List">
-    QUEUE_ID, RESOURCE_ID, PARENT_QUEUE_ID, RESOURCE_NAME, RESOURCE_LEVEL, RESOURCE_TYPE, RESOURCE_URL, ACTIVE_FLAG, ORDER_NUM, APP_TYPE, ADD_TIME, ADD_NAME, ADD_NO
+    queue_id, resource_id, parent_queue_id, resource_name, resource_level, resource_type, resource_url, active_flag,
+     order_num, app_type, add_time, add_name, add_no
     </sql>
     <select id="getByQueueId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from LIST_TOOL_QUEUE
-        where QUEUE_ID = #{queueId, jdbcType=DECIMAL}
+        from list_tool_queue
+        where queue_id = #{queueId, jdbcType=DECIMAL}
     </select>
 
     <select id="listByParentQueueId" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from LIST_TOOL_QUEUE
-        where PARENT_QUEUE_ID = #{parentQueueId, jdbcType=DECIMAL}
+        from list_tool_queue
+        where parent_queue_id = #{parentQueueId, jdbcType=DECIMAL}
     </select>
 
-    <select id="listQueuesByAppType" resultMap="BaseResultMap">
+    <select id="listQueuesByAppType" parameterType="java.lang.Integer" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from LIST_TOOL_QUEUE
-        where APP_TYPE = #{appType, jdbcType=DECIMAL}
+        from list_tool_queue
+        where app_type = #{appType, jdbcType=DECIMAL}
         and active_flag = 1
     </select>
+
+
+    <select id="listMenusByType" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from list_tool_queue
+        where app_type = #{appType, jdbcType=DECIMAL}
+        and resource_type = #{resourceType, jdbcType=VARCHAR}
+        and active_flag = 1
+        order by order_num
+    </select>
+
+    <select id="list" parameterType="com.fjxc.csb.domain.resource.ListToolQueue" resultMap="BaseResultMap">
+        select
+        <include refid="Base_Column_List"/>
+        from list_tool_queue
+        where 1 = 1
+        <if test="appType != null">
+            and app_type = #{appType, jdbcType=DECIMAL}
+        </if>
+        <if test="resourceType != null">
+            and resource_type = #{resourceType, jdbcType=VARCHAR}
+        </if>
+        <if test="queueId != null">
+            and queue_id = #{queueId, jdbcType=DECIMAL}
+        </if>
+        <if test="resourceId != null">
+            and resource_id = #{resourceId, jdbcType=DECIMAL}
+        </if>
+        <if test="resourceName != null">
+            and resource_name like CONCAT(CONCAT('%', #{resourceName,jdbcType=VARCHAR}), '%')
+        </if>
+        and active_flag = 1
+    </select>
+
+
+    <!--新增所有列-->
+    <insert id="insert" keyProperty="" useGeneratedKeys="true">
+        insert into list_tool_queue(queue_id, resource_id, parent_queue_id, resource_name, resource_level, resource_type, resource_url, active_flag,
+     order_num, app_type, add_time, add_name, add_no)
+        values (#{queueId}, #{resourceId},#{parentQueueId},#{resourceName},#{resourceLevel},#{resourceType},#{resourceUrl},#{activeFlag},#{orderNum},#{appType},
+        #{addTime},#{addName},#{addNo})
+    </insert>
+
+    <select id="getMaxQueueId" resultType="java.lang.Integer">
+        select max(queue_id) from list_tool_queue
+    </select>
+
+    <select id="countByResourceId" resultType="java.lang.Integer">
+        select count(0) from list_tool_queue where resource_id = #{resourceId}
+    </select>
+
+    <update id="update" parameterType="com.fjxc.csb.domain.resource.ListToolQueue">
+        update list_tool_queue
+        set
+        resource_name = #{resourceName},
+        parent_queue_id = #{parentQueueId},
+        resource_type = #{resourceType},
+        resource_id = #{resourceId},
+        resource_url = #{resourceUrl},
+        order_num = #{orderNum},
+        active_flag = #{activeFlag}
+        where queue_id = #{queueId,jdbcType=INTEGER}
+    </update>
+
+
 
 </mapper>

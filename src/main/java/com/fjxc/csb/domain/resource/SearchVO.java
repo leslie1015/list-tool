@@ -1,9 +1,15 @@
 package com.fjxc.csb.domain.resource;
 
+import org.apache.commons.lang.StringUtils;
+
 /**
  * @author wangyong
  */
 public class SearchVO {
+
+    private static final String DEFAULT_PAGE_NO = "1";
+
+    private static final String DEFAULT_PAGE_SIZE = "10";
 
     private String resourceId;
 
@@ -37,7 +43,7 @@ public class SearchVO {
     }
 
     public String getPageSize() {
-        return pageSize;
+        return StringUtils.isBlank(pageSize) ? DEFAULT_PAGE_SIZE : pageSize;
     }
 
     public void setPageSize(String pageSize) {
@@ -45,7 +51,7 @@ public class SearchVO {
     }
 
     public String getCurrentPageNo() {
-        return currentPageNo;
+        return StringUtils.isBlank(currentPageNo)  ? DEFAULT_PAGE_NO : currentPageNo;
     }
 
     public void setCurrentPageNo(String currentPageNo) {

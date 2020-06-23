@@ -36,7 +36,7 @@ public class ListToolQueue {
     private String addName;
 
     private Boolean expanded = false;
-    private String selected = "false";
+    private Boolean selected = false;
 
     private List<ListToolQueue> childQueues;
 
@@ -48,11 +48,11 @@ public class ListToolQueue {
         this.expanded = expanded;
     }
 
-    public String getSelected() {
+    public Boolean getSelected() {
         return selected;
     }
 
-    public void setSelected(String selected) {
+    public void setSelected(Boolean selected) {
         this.selected = selected;
     }
 

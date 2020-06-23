@@ -1,6 +1,8 @@
 package com.fjxc.csb.service.resource;
 
+import com.fjxc.csb.domain.SearchCommonVO;
 import com.fjxc.csb.domain.resource.ListToolQueue;
+import com.github.pagehelper.PageInfo;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -16,5 +18,11 @@ public interface ListToolQueueService {
 
     List<ListToolQueue> listByParentQueueId(Integer parentQueueId);
 
-    String getMenuJson(Integer appType);
+    List<ListToolQueue> getMenuJson(Integer appType);
+
+    List<ListToolQueue> listMenusByType(Integer appType, String resourceType);
+
+    void saveOrUpdate(ListToolQueue queue) throws Exception;
+
+    PageInfo list(SearchCommonVO<ListToolQueue> condition);
 }

@@ -2,15 +2,21 @@ package com.fjxc.csb.service.impl.resource;
 
 import com.fjxc.csb.constants.SystemConstants;
 import com.fjxc.csb.dao.resource.ListToolQueueMapper;
+import com.fjxc.csb.domain.SearchCommonVO;
 import com.fjxc.csb.domain.resource.ListToolQueue;
 import com.fjxc.csb.service.resource.ListToolQueueService;
 import com.fjxc.csb.util.RedisUtils;
-import net.sf.json.JSONArray;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+import org.apache.commons.lang.StringUtils;
+import org.springframework.beans.BeanUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -36,16 +42,19 @@ public class ListToolQueueServiceImpl implements ListToolQueueService {
     }
 
     @Override
-    public String getMenuJson(Integer appType) {
+    public List<ListToolQueue> getMenuJson(Integer appType) {
 
         String redisKey = SystemConstants.REDIS_KEY_PREFIX_MENU + appType;
         if (redisUtils.exists(redisKey)) {
-            return (String) redisUtils.get(redisKey);
+            return (List<ListToolQueue>) redisUtils.get(redisKey);
         }
         List<ListToolQueue> queues = listToolQueueMapper.listQueuesByAppType(appType);
-        String menuJson = JSONArray.fromObject(buildMenuList(queues)).toString();
-        redisUtils.set(redisKey, menuJson, SystemConstants.REDIS_EXPIRED_TIME);
-        return menuJson;
+
+        queues = buildMenuList(queues);
+
+//        String menuJson = JSONArray.fromObject().toString();
+        redisUtils.set(redisKey, queues, SystemConstants.REDIS_EXPIRED_TIME);
+        return queues;
     }
 
     /**
@@ -90,5 +99,100 @@ public class ListToolQueueServiceImpl implements ListToolQueueService {
             }
             return -1;
         });
+    }
+
+    @Override
+    public PageInfo list(SearchCommonVO<ListToolQueue> condition) {
+        ListToolQueue queueVO = condition.getFilters();
+        PageHelper.startPage(condition.getPageNum(), condition.getPageSize());
+        PageHelper.orderBy("add_time desc");
+        List<ListToolQueue> queueList = listToolQueueMapper.list(queueVO);
+        return new PageInfo(queueList);
+    }
+
+    @Override
+    public List<ListToolQueue> listMenusByType(Integer appType, String resourceType) {
+        return listToolQueueMapper.listMenusByType(appType, resourceType);
+    }
+
+    @Override
+    @Transactional(rollbackFor = Exception.class)
+    public void saveOrUpdate(ListToolQueue queue) throws Exception {
+        if (null == queue.getQueueId()) {
+            insert(queue);
+            return ;
+        }
+        update(queue);
+    }
+
+    private synchronized void insert(ListToolQueue queue) throws Exception {
+
+        validParam(queue);
+
+        ListToolQueue queue4DB = new ListToolQueue();
+        BeanUtils.copyProperties(queue, queue4DB);
+        Integer maxQueueId = listToolQueueMapper.getMaxQueueId();
+        queue4DB.setQueueId(maxQueueId + 2);
+        if ("link".equals(queue.getResourceType())) {
+            queue4DB.setResourceUrl("/" + queue.getResourceId());
+        }
+        queue4DB.setAppType(1);
+        queue4DB.setResourceLevel(getResourceLevel(queue4DB.getParentQueueId()));
+        if (null == queue.getOrderNum()) {
+            queue4DB.setOrderNum(0);
+        }
+        queue4DB.setAddNo("000001");
+        queue4DB.setAddName("admin");
+        queue4DB.setAddTime(new Date());
+        listToolQueueMapper.insert(queue4DB);
+    }
+
+    private void validParam(ListToolQueue queue) throws Exception {
+        if (StringUtils.isBlank(queue.getResourceName())) {
+            throw new Exception("菜单名不能为空");
+        }
+        if (StringUtils.isBlank(queue.getResourceType())) {
+            throw new Exception("菜单类型不能为空");
+        }
+        if (null == queue.getResourceId()) {
+            throw new Exception("资源ID不能为空");
+        }
+        if (listToolQueueMapper.countByResourceId(queue.getResourceId()) > 0) {
+            throw new Exception("该资源ID已被占用，请检查");
+        }
+    }
+
+    private void update(ListToolQueue queue) throws Exception {
+        validParam(queue);
+        ListToolQueue queueDB = listToolQueueMapper.getByQueueId(queue.getQueueId());
+        if (null == queueDB) {
+            throw new Exception("无此队列信息");
+        }
+        queueDB.setResourceName(queue.getResourceName());
+        queueDB.setParentQueueId(queue.getParentQueueId());
+        queueDB.setResourceType(queue.getResourceType());
+        queueDB.setResourceId(queue.getResourceId());
+        if ("link".equals(queue.getResourceType())) {
+            queueDB.setResourceUrl("/" + queue.getResourceId());
+        } else {
+            queueDB.setResourceUrl("");
+        }
+        queueDB.setResourceLevel(getResourceLevel(queueDB.getParentQueueId()));
+        queueDB.setOrderNum(queue.getOrderNum());
+        queueDB.setActiveFlag(queue.getActiveFlag());
+        listToolQueueMapper.update(queueDB);
+    }
+
+    /**
+     * 获取当前菜单级别，方便前端做样式控制，如越往内层的菜单，字体越小
+     * @param parentQueueId
+     * @return
+     */
+    private Integer getResourceLevel(Integer parentQueueId) {
+        if (null == parentQueueId || parentQueueId.equals(0)) {
+            return 1;
+        }
+        ListToolQueue parentQueue = listToolQueueMapper.getByQueueId(parentQueueId);
+        return parentQueue.getResourceLevel() + 1;
     }
 }

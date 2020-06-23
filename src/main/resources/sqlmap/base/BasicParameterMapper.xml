@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.fjxc.csb.dao.parameter.BasicParameterMapper">
     <resultMap id="BaseResultMap" type="com.fjxc.csb.domain.parameter.BasicParameter">
-        <result column="PARAM_GROUP_KEY" jdbcType="VARCHAR" property="paramGroupKkey"/>
+        <result column="PARAM_TYPE" jdbcType="VARCHAR" property="paramType"/>
         <result column="PARAM_NAME" jdbcType="VARCHAR" property="paramName"/>
         <result column="PARAM_KEY" jdbcType="VARCHAR" property="paramKey"/>
         <result column="PARAM_VALUE" jdbcType="VARCHAR" property="paramValue"/>
@@ -21,29 +21,29 @@
         <result column="PARAM_VALUE" jdbcType="VARCHAR" property="paramValue"/>
     </resultMap>
     <sql id="Base_Column_List">
-        PARAM_GROUP_KEY, PARAM_NAME, PARAM_KEY, PARAM_VALUE, LAN_CODE, ORDER_NUM, REMARK, ADD_NO, ADD_NAME, ADD_TIME, UPDATE_NO, UPDATE_NAME, UPDATE_TIME
+        param_type, param_name, param_key, param_value, lan_code, order_num, remark, add_no, add_name, add_time, update_no, update_name, update_time
     </sql>
 
     <select id="listByGroupKey" parameterType="java.lang.String" resultMap="BaseResultMap">
         select
         <include refid="Base_Column_List"/>
-        from BASIC_PARAMETER
-        where PARAM_GROUP_KEY = #{groupKey, jdbcType=VARCHAR}
+        from basic_parameter
+        where PARAM_TYPE = #{groupKey, jdbcType=VARCHAR}
         order by order_num
     </select>
 
     <select id="listKeyValByGroupKey" parameterType="java.lang.String" resultMap="SimpleParamResult">
-        select PARAM_KEY,PARAM_VALUE
-        from BASIC_PARAMETER
-        where PARAM_GROUP_KEY = #{groupKey, jdbcType=VARCHAR}
+        select param_key,param_value
+        from basic_parameter
+        where PARAM_TYPE = #{groupKey, jdbcType=VARCHAR}
         order by order_num
     </select>
 
-    <select id="getValueByKey" parameterType="java.lang.String" resultType="String">
-        select PARAM_VALUE
-        from BASIC_PARAMETER
-        where PARAM_KEY = #{key, jdbcType=VARCHAR}
-        and PARAM_GROUP_KEY = #{groupKey, jdbcType=DECIMAL}
+    <select id="getValueByKey" parameterType="java.lang.String" resultType="java.lang.String">
+        select param_value
+        from basic_parameter
+        where param_key = #{key, jdbcType=VARCHAR}
+        and PARAM_TYPE = #{groupKey, jdbcType=DECIMAL}
     </select>
 
 </mapper>

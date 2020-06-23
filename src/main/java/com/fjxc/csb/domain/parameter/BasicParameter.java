@@ -10,7 +10,7 @@ public class BasicParameter {
     /**
      * 参数组的key
      */
-    private String paramGroupKey;
+    private String paramType;
 
     /**
      * 参数名
@@ -54,12 +54,12 @@ public class BasicParameter {
 
     private Date updateTime;
 
-    public String getParamGroupKey() {
-        return paramGroupKey;
+    public String getParamType() {
+        return paramType;
     }
 
-    public void setParamGroupKey(String paramGroupKey) {
-        this.paramGroupKey = paramGroupKey;
+    public void setParamType(String paramType) {
+        this.paramType = paramType;
     }
 
     public String getParamName() {
