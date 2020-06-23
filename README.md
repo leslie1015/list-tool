@@ -55,9 +55,8 @@
 ##### https://github.com/leslie1015/silk-web （vue2.6+webpack+iView+ElementUI）
 
 ## 测试地址（对应“说明”中Demo的代码）
-##### （admin/123456）
 ##### [列表配置界面](http://139.186.75.156:9004/listConfig.html)
 ##### [配置后列表界面](http://139.186.75.156:9004/listTool.html)
-##### （可使用已有测试数据的resourceId来修改配置）
+##### （测试账号/密码：admin/123456， 可使用已有测试数据的resourceId来修改配置）
 #### 前端有sessionStorage缓存配置信息，在配置界面提交配置信息后，需要关闭该站点或者重启浏览器再次进入列表界面查看效果
 
