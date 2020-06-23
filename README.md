@@ -51,14 +51,16 @@
 
 4. 其它。因为动态，所以配置多，配置信息的特点是不需要较高的时效性，很少变动，工具所有配置信息全部放到Redis中缓存，通过提高配置加载速度，支持手动刷新缓存。前端sessionStorage缓存菜单、列表字段等信息。
 
-## 测试地址
+
+## 说明
+##### 此项目为列表后端，整体为前后端分离项目，对应的前端为https://github.com/leslie1015/list-tool-web ，此工具代码具体的应用，请参照Demo，后端为Spring Cloud架构，前端是基于Vue2.6的多页面项目
+##### https://github.com/leslie1015/silk-server （java8+mysql+redis+maven）
+##### https://github.com/leslie1015/silk-web （vue2.6+webpack+iView+ElementUI）
+
+## 测试地址（基于“说明”中的Demo）
 ##### （admin/123456）
 ##### 列表配置界面：http://139.186.75.156:9004/listConfig.html
 ##### 配置后列表界面：http://139.186.75.156:9004/listTool.html 
 ##### （可使用已有测试数据的resourceId来修改配置）
 #### 前端有sessionStorage缓存配置信息，在配置界面提交配置信息后，需要关闭该站点或者重启浏览器再次进入列表界面查看效果
 
-## 说明
-##### 此项目为列表后端，整体为前后端分离项目，对应的前端为https://github.com/leslie1015/list-tool-web ，此工具代码具体的应用，请参照Demo，后端为Spring Cloud架构，前端是基于Vue2.6的多页面项目
-##### https://github.com/leslie1015/silk-server （java8+mysql+redis+maven）
-##### https://github.com/leslie1015/silk-web （vue2.6+webpack+iView+ElementUI）
