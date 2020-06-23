@@ -30,7 +30,7 @@
 
 
 
-开发环境配置成功后点击右上角“导出配置”按钮，下载配置对应的sql，到测试环境执行即可将配置信息复制过去
+4. 开发环境配置成功后点击右上角“导出配置”按钮，下载配置对应的sql，到测试环境执行即可将配置信息复制过去
 ![avatar](https://upload-images.jianshu.io/upload_images/13491503-688c7fd227aa0230.png?imageMogr2/auto-orient/strip|imageView2/2/w/1200/format/webp)
 
 ### 四、效果
