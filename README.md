@@ -45,11 +45,11 @@
 # 实现原理：
 1. 列表的显示。mybatis开发，需要一个实体，与数据库表字段做映射，返回对应结构的数据。显然我们这个工具这样做是不行的，因为共用一个查询方法，字段是变化的，所以返回的数据结构用了HashMap，可以灵活返回任意字段。定义Mapper接口，自定义接口的实现，注入SqlSessionFactory，获取到sqlSession，sqlSession.selectList(resourceId)执行resourceId对应的sql。
 
-2.列表的查询。查询使用了Mybatis的拦截器，原理是执行前拦截sql，根据配置的查询条件修改sql，网上所查询到的Mybatis拦截器示例基本都是拦截StatementHandler.prepare，刚开始写的时候我拦截的也是这个方法，没什么问题，但是在做分页的时候出问题了，正确的结果应该是先拼接查询条件，再拼接分页语句，工具里面使用了PageHelper5来做分页，修改拦截器的顺序无效，结果都是先拼接分页语句再拼接查询条件，后来查看PageHelper5文档发现，PageHelper5拦截的是Executor的query方法，逻辑上在StatementHandler.prepare之前执行，所以配置拦截器的顺序失效了，只有拦截相同的方法，拦截器放置的顺序才会有效，所以参照了PageHelper5的拦截器源码，拦截query方法，终于正常。
+2. 列表的查询。查询使用了Mybatis的拦截器，原理是执行前拦截sql，根据配置的查询条件修改sql，网上所查询到的Mybatis拦截器示例基本都是拦截StatementHandler.prepare，刚开始写的时候我拦截的也是这个方法，没什么问题，但是在做分页的时候出问题了，正确的结果应该是先拼接查询条件，再拼接分页语句，工具里面使用了PageHelper5来做分页，修改拦截器的顺序无效，结果都是先拼接分页语句再拼接查询条件，后来查看PageHelper5文档发现，PageHelper5拦截的是Executor的query方法，逻辑上在StatementHandler.prepare之前执行，所以配置拦截器的顺序失效了，只有拦截相同的方法，拦截器放置的顺序才会有效，所以参照了PageHelper5的拦截器源码，拦截query方法，终于正常。
 
-3.列表前端页面。前端代码使用Vue2.0+iView开发，难点在于一切都是动态的，包括动态路由、动态字段、动态样式等，列表渲染用了render
+3. 列表前端页面。前端代码使用Vue2.0+iView开发，难点在于一切都是动态的，包括动态路由、动态字段、动态样式等，列表渲染用了render
 
-4.其它。因为动态，所以配置多，配置信息的特点是不需要较高的时效性，很少变动，工具所有配置信息全部放到Redis中缓存，通过提高配置加载速度，支持手动刷新缓存。前端sessionStorage缓存菜单、列表字段等信息。
+4. 其它。因为动态，所以配置多，配置信息的特点是不需要较高的时效性，很少变动，工具所有配置信息全部放到Redis中缓存，通过提高配置加载速度，支持手动刷新缓存。前端sessionStorage缓存菜单、列表字段等信息。
 
 
 #### 说明：此项目为列表后端，整体为前后端分离项目，对应的前端为https://github.com/leslie1015/list-tool-web ，此工具代码具体的应用，请参照Demo，后端为Spring Cloud架构，前端是基于Vue2.6的多页面项目
