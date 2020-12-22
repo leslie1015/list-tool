@@ -1,0 +1,46 @@
+{
+  "name": "silk-web",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "test:unit": "vue-cli-service test:unit"
+  },
+  "dependencies": {
+    "axios": "^0.18.0",
+    "core-js": "^2.6.5",
+    "element-ui": "^2.10.1",
+    "iview": "^3.4.1",
+    "moment": "^2.24.0",
+    "portal-vue": "^2.1.4",
+    "sortablejs": "^1.10.2",
+    "vue": "^2.6.10",
+    "vue-axios": "^2.1.1",
+    "vue-resource": "^1.5.1",
+    "vue-router": "^3.0.3",
+    "vuedraggable": "^2.23.2",
+    "vuex": "^3.0.1"
+  },
+  "devDependencies": {
+    "@vue/cli-plugin-babel": "^3.9.0",
+    "@vue/cli-plugin-eslint": "^3.9.0",
+    "@vue/cli-plugin-unit-jest": "^3.9.0",
+    "@vue/cli-service": "^3.9.0",
+    "@vue/eslint-config-prettier": "^4.0.1",
+    "@vue/test-utils": "1.0.0-beta.29",
+    "babel-core": "7.0.0-bridge.0",
+    "babel-eslint": "^10.0.1",
+    "babel-jest": "^23.6.0",
+    "babel-preset-latest": "^6.0.0",
+    "eslint": "^5.16.0",
+    "eslint-plugin-vue": "^5.0.0",
+    "qs": "^6.7.0",
+    "stylus": "^0.54.5",
+    "stylus-loader": "^3.0.2",
+    "node-sass": "^4.5.0",
+    "sass-loader": "^5.0.1",
+    "vue-template-compiler": "^2.6.10"
+  }
+}
