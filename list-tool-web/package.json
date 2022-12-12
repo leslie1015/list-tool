@@ -36,7 +36,7 @@
     "babel-preset-latest": "^6.0.0",
     "eslint": "^5.16.0",
     "eslint-plugin-vue": "^5.0.0",
-    "qs": "^6.7.0",
+    "qs": "^6.5.3",
     "stylus": "^0.54.5",
     "stylus-loader": "^3.0.2",
     "node-sass": "^4.5.0",
